@@ -1,68 +1,34 @@
 import "./App.css";
-import { Form } from "./components/Form/Form";
-import { useEffect, useState, useRef } from "react";
-import { AUTHORS } from "./utils/consts";
-import { MessageList } from "./components/MessageList/messageList";
-import { DialogList } from "./components/DialogList/DialogList";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Chat } from "./screens/Chat/Chat";
+import { ChatList } from "./components/ChatList/ChatList";
+
+const Home = () => <h4>Home page</h4>;
 
 function App() {
-  const userNames = [
-    { author: "Ann", id: 1 },
-    { author: "Bob", id: 2 },
-    { author: "Caren", id: 3 },
-    { author: "Mary", id: 4 },
-    { author: "Lidi", id: 5 },
-    { author: "Elnar", id: 6 },
-  ];
-  const timeout = useRef();
-
-  const [messages, setMessages] = useState([]);
-  const addMessage = (newMsg) => {
-    setMessages([...messages, newMsg]);
-  };
-  const sendMessage = (text) => {
-    addMessage({
-      author: AUTHORS.human,
-      text,
-      id: `msg-${Date.now()}`,
-    });
-  };
-
-  // const [dialogs, setDialogs] = useState([...userNames]);
-  // const addDialog = (newDlg) => {
-  //   setDialogs([...dialogs]);
-  // };
-
-  useEffect(() => {
-    if (messages[messages.length - 1]?.author === AUTHORS.human) {
-      timeout.current = setTimeout(() => {
-        addMessage({
-          text: "Robot answer",
-          author: AUTHORS.robot,
-          id: `msg-${Date.now()}`,
-        });
-      }, 1000);
-    }
-
-    return () => {
-      clearTimeout(timeout.current);
-    };
-  }, [messages]);
-
   return (
-    <div className="App">
-      <div className="messenger-block">
-        <section className="dialog-list">
-          <DialogList dialogs={userNames} />
-        </section>
-        <section>
-          <div className="message-field">
-            <MessageList messages={messages} />
-          </div>
-          <Form onSubmit={sendMessage} />
-        </section>
-      </div>
-    </div>
+    <BrowserRouter>
+      <section className="main">
+        <div>
+          <ul className="menu">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/chat">Chat</Link>
+            </li>
+          </ul>
+        </div>
+        <div className="chats">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/chat" element={<ChatList />}>
+              <Route path=":id" element={<Chat />} />
+            </Route>
+          </Routes>
+        </div>
+      </section>
+    </BrowserRouter>
   );
 }
 
