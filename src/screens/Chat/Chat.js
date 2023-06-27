@@ -4,15 +4,6 @@ import { MessageList } from "../../components/MessageList/messageList";
 import { Form } from "../../components/Form/Form";
 import { Navigate, useParams } from "react-router-dom";
 
-const userNames = [
-  { author: "Ann", id: 1 },
-  { author: "Bob", id: 2 },
-  { author: "Caren", id: 3 },
-  { author: "Mary", id: 4 },
-  { author: "Lidi", id: 5 },
-  { author: "Elnar", id: 6 },
-];
-
 const initMessages = {
   1: [],
   2: [],

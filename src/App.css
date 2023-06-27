@@ -1,19 +1,22 @@
 .App {
   text-align: center;
+  margin: 0 auto;
+  
 }
 
 .main {
   padding-top: 40px;
-  max-width: 1600px;
+  margin: auto;
   display: flex;
+  max-width: 800px;
   justify-content: center;
 }
 .menu {
   list-style-type: none;
 }
-.chats {
+.content_container {
+  width: 1600px;
   display: flex;
-  justify-content: space-between;
 }
 .messenger-block {
   margin: 0 auto;
