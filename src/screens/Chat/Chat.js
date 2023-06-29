@@ -4,40 +4,35 @@ import { MessageList } from "../../components/MessageList/messageList";
 import { Form } from "../../components/Form/Form";
 import { Navigate, useParams } from "react-router-dom";
 
-const initMessages = {
-  1: [],
-  2: [],
-  3: [],
-  4: [],
-  5: [],
-  6: [],
-};
-
-export function Chat() {
+export function Chat({ messages, addMessage }) {
   const { id } = useParams();
   const timeout = useRef();
 
-  const [messages, setMessages] = useState(initMessages);
-  const addMessage = (newMsg) => {
-    setMessages({ ...messages, [id]: [...messages[id], newMsg] });
-  };
+  // const [messages, setMessages] = useState(initMessages);
+
   const sendMessage = (text) => {
-    addMessage({
-      author: AUTHORS.human,
-      text,
-      id: `msg-${Date.now()}`,
-    });
+    addMessage(
+      {
+        author: AUTHORS.human,
+        text,
+        id: `msg-${Date.now()}`,
+      },
+      id
+    );
   };
 
   useEffect(() => {
     const lastMessage = messages[id]?.[messages[id]?.length - 1];
     if (lastMessage?.author === AUTHORS.human) {
       timeout.current = setTimeout(() => {
-        addMessage({
-          text: "Robot answer",
-          author: AUTHORS.robot,
-          id: `msg-${Date.now()}`,
-        });
+        addMessage(
+          {
+            text: "Robot answer",
+            author: AUTHORS.robot,
+            id: `msg-${Date.now()}`,
+          },
+          id
+        );
       }, 1000);
     }
 
