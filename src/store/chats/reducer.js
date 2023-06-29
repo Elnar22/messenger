@@ -8,7 +8,7 @@ export const chatsReducer = (state = initialState, { type, payload }) => {
       return [...state, payload];
     }
     case DELETE_CHAT: {
-      return state.filter(({ id }) => id != payload);
+      return state.filter(({ id }) => id !== payload);
     }
     default:
       return state;
